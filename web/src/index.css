@@ -1,0 +1,233 @@
+@import "tailwindcss";
+@source "../index.html";
+@source "./**/*.jsx";
+
+@theme {
+  /* Supplied palette */
+  --color-cool-sky: #5AA9E6;
+  --color-cool-sky-2: #6DB9EF;
+  --color-sky-blue: #7FC8F8;
+  --color-icy-blue: #BCE1F9;
+  --color-alice-blue: #DBEDF9;
+  --color-alice-blue-2: #EAF3F9;
+  --color-bright-snow: #F9F9F9;
+  --color-vanilla-custard: #FCEFAC;
+  --color-royal-gold: #FFE45E;
+  --color-rose-kiss: #FF6392;
+
+  /* Semantic application tokens */
+  --color-ink: #17324D;
+  --color-muted: #5E7488;
+  --color-canvas: #F9F9F9;
+  --color-surface: #FFFFFF;
+  --color-blue: #5AA9E6;
+  --color-blue-deep: #173A59;
+  --color-blue-soft: #EAF3F9;
+  --color-sky-soft: #EAF3F9;
+  --color-ice: #BCE1F9;
+  --color-mint: #3A8CC8;
+  --color-mint-soft: #DBEDF9;
+  --color-amber: #8E6C00;
+  --color-amber-soft: #FCEFAC;
+  --color-vanilla: #FCEFAC;
+  --color-vanilla-soft: #FCEFAC;
+  --color-rose: #B83F68;
+  --color-rose-soft: #FFE7EE;
+  --color-line: #CFE4F1;
+  --color-snow: #F9F9F9;
+}
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --palette-primary: #5AA9E6;
+  --palette-primary-hover: #6DB9EF;
+  --palette-primary-soft: #EAF3F9;
+  --palette-surface: #FFFFFF;
+  --palette-canvas: #F9F9F9;
+  --palette-warning: #FFE45E;
+  --palette-danger: #FF6392;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+  }
+
+  button, a, input, select, textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button, input, select, textarea { font: inherit; }
+
+  button:disabled { cursor: not-allowed; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { border: 3px solid var(--color-canvas); border-radius: 999px; background: var(--color-line); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-ice); }
+
+  button:active:not(:disabled), a:active {
+    transform: scale(0.985);
+    transition: transform 120ms var(--ease-out);
+  }
+
+  ::selection {
+    background: var(--color-icy-blue);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .ui-page {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding: 28px clamp(16px, 3vw, 48px) 56px;
+  }
+
+  .ui-surface {
+    border: 1px solid color-mix(in srgb, var(--color-line) 82%, white);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--color-surface) 96%, var(--color-blue-soft));
+    box-shadow: 0 10px 30px rgba(23, 50, 77, 0.045);
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), border-color 180ms ease;
+  }
+
+  .ui-surface:hover {
+    border-color: color-mix(in srgb, var(--color-blue) 28%, var(--color-line));
+  }
+
+  .ui-kicker {
+    color: var(--color-muted);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .ui-control {
+    min-height: 44px;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  }
+
+  .ui-control:focus-visible,
+  .ui-focus-ring:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-blue) 28%, transparent);
+    outline-offset: 2px;
+    border-color: var(--color-blue);
+  }
+
+  .ui-control::placeholder {
+    color: color-mix(in srgb, var(--color-muted) 72%, white);
+  }
+
+  .ui-divider { border-color: color-mix(in srgb, var(--color-line) 86%, white); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ui-surface:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(23, 50, 77, 0.08); }
+  }
+}
+
+@layer utilities {
+  .motion-enter {
+    animation: motion-enter 420ms var(--ease-out) both;
+  }
+
+  .landing-float {
+    animation: landing-float 7s ease-in-out infinite;
+  }
+
+  .landing-float-delayed {
+    animation: landing-float 9s ease-in-out 700ms infinite;
+  }
+
+  .landing-pulse {
+    animation: landing-pulse 2.8s ease-in-out infinite;
+  }
+
+  .landing-shimmer {
+    background-size: 200% 100%;
+    animation: landing-shimmer 5s ease-in-out infinite;
+  }
+
+  .landing-progress {
+    transform-origin: left center;
+    animation: landing-progress 1.4s var(--ease-out) both;
+  }
+
+  .motion-stagger > * {
+    animation: motion-enter 420ms var(--ease-out) both;
+  }
+
+  .motion-stagger > *:nth-child(1) { animation-delay: 30ms; }
+  .motion-stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .motion-stagger > *:nth-child(3) { animation-delay: 90ms; }
+  .motion-stagger > *:nth-child(4) { animation-delay: 120ms; }
+  .motion-stagger > *:nth-child(5) { animation-delay: 150ms; }
+  .motion-stagger > *:nth-child(6) { animation-delay: 180ms; }
+
+  .motion-surface {
+    transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), border-color 180ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .motion-surface:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(90, 169, 230, 0.14);
+    }
+  }
+}
+
+@keyframes motion-enter {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes landing-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -10px, 0) rotate(1deg); }
+}
+
+@keyframes landing-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.92); box-shadow: 0 0 0 0 rgba(143, 224, 185, 0.35); }
+  50% { opacity: 1; transform: scale(1.08); box-shadow: 0 0 0 7px rgba(143, 224, 185, 0); }
+}
+
+@keyframes landing-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes landing-progress {
+  from { transform: scaleX(0); opacity: 0.35; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+  }
+
+  button:active:not(:disabled), a:active,
+  .motion-surface:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .backdrop-blur-xl, .backdrop-blur-sm {
+    backdrop-filter: none;
+    background-color: rgba(249, 249, 249, 0.98);
+  }
+}
